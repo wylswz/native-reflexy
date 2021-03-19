@@ -1,5 +1,7 @@
 # Native-reflexy
 
+NOTE: This plugin only supports `java-11-openjdk`
+
 ## Why Native-reflexy
 Native-reflexy is a maven plugin that automatically generates reflection and 
 proxy config for your native-java project. When deploying java applications on native platforms
