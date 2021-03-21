@@ -27,6 +27,9 @@ public class ReflectionMojo extends AbstractMojo {
 	@Parameter(name = "reflectPackages")
 	String[] reflectPackages;
 
+	@Parameter(name = "excludeClasses")
+	String[] excludeClasses; 
+
 	@Parameter(name = "reflectConfigFile", defaultValue = "xm-reflection-config.json")
 	String reflectConfigFile;
 
@@ -66,7 +69,14 @@ public class ReflectionMojo extends AbstractMojo {
 
 
 	private Set<ReflectionConfigEntry> generateReflectionConfigs(Reflections reflections) {
-		return reflections.getAllTypes().stream().map(ReflectionConfigEntry::new).collect(Collectors.toSet());
+		Set<String> excludeSet = new HashSet<>();
+		for (String s : this.excludeClasses) {
+			excludeSet.add(s);
+		}
+		return reflections.getAllTypes().stream()
+		.map(ReflectionConfigEntry::new)
+		.filter(e -> !excludeSet.contains(e.name))
+		.collect(Collectors.toSet());
 	}
 
 	private Reflections getReflectionsFromPackagesAndClasses() {
