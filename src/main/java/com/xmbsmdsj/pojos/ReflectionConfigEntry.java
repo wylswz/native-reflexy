@@ -1,4 +1,4 @@
-package com.xmbsmdsj.plugin;
+package com.xmbsmdsj.pojos;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
@@ -6,19 +6,19 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 @JsonInclude(JsonInclude.Include.NON_NULL)
 public class ReflectionConfigEntry {
 	@JsonProperty
-	String name;
+	public String name;
 	@JsonProperty
-	Boolean allDeclaredConstructors;
+	public Boolean allDeclaredConstructors;
 	@JsonProperty
-	Boolean allPublicConstructors;
+	public Boolean allPublicConstructors;
 	@JsonProperty
-	Boolean allDeclaredMethods;
+	public Boolean allDeclaredMethods;
 	@JsonProperty
-	Boolean allPublicMethods;
+	public Boolean allPublicMethods;
 	@JsonProperty
-	Boolean allDeclaredClasses;
+	public Boolean allDeclaredClasses;
 	@JsonProperty
-	Boolean allPublicClasses;
+	public Boolean allPublicClasses;
 
 	public ReflectionConfigEntry(String className) {
 		this.name = className;

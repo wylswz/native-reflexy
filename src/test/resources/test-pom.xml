@@ -69,6 +69,21 @@
 				<groupId>com.xmbsmdsj</groupId>
 				<artifactId>native-reflexy</artifactId>
 				<version>1.0-SNAPSHOT</version>
+				<executions>
+					<execution>
+						<phase>compile</phase>
+						<goals>
+							<goal>reflection</goal>
+						</goals>
+
+					</execution>
+					<execution>
+						<phase>prepare-package</phase>
+						<goals>
+							<goal>proxy</goal>
+						</goals>
+					</execution>
+				</executions>
 				<configuration>
 					<reflectClasses>
 						<param>com.fasterxml.jackson.core.filter.FilteringParserDelegate</param>
@@ -76,15 +91,11 @@
 					<reflectPackages>
 						<param>com.fasterxml.jackson.core.format</param>
 					</reflectPackages>
+					<proxyInterfaces>
+						<param>com.xmbsmdsj.mock.MockProxy</param>
+						<param>com.xmbsmdsj.mock.MockProxy,com.xmbsmdsj.mock.MockProxy2</param>
+					</proxyInterfaces>
 				</configuration>
-				<executions>
-					<execution>
-						<phase>compile</phase>
-						<goals>
-							<goal>reflection</goal>
-						</goals>
-					</execution>
-				</executions>
 			</plugin>
 		</plugins>
 	</build>

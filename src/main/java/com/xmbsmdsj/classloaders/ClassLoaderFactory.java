@@ -1,4 +1,4 @@
-package com.xmbsmdsj.plugin;
+package com.xmbsmdsj.classloaders;
 
 public interface ClassLoaderFactory {
 	/**

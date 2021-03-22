@@ -10,81 +10,31 @@ import java.util.Set;
 import java.util.stream.Collectors;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import org.apache.maven.plugin.AbstractMojo;
+import com.xmbsmdsj.classloaders.ClassLoaderFactory;
+import com.xmbsmdsj.classloaders.MavenProjectClassLoaderFactory;
+import com.xmbsmdsj.pojos.ReflectionConfigEntry;
+import com.xmbsmdsj.utils.ConfigLocationUtils;
 import org.apache.maven.plugin.MojoExecutionException;
 import org.apache.maven.plugin.MojoFailureException;
 import org.apache.maven.plugins.annotations.Mojo;
-import org.apache.maven.plugins.annotations.Parameter;
 import org.apache.maven.plugins.annotations.ResolutionScope;
-import org.apache.maven.project.MavenProject;
 import org.reflections.Reflections;
 import org.reflections.scanners.SubTypesScanner;
 import org.reflections.util.ClasspathHelper;
 import org.reflections.util.ConfigurationBuilder;
 
 @Mojo(name = "reflection", requiresDependencyResolution = ResolutionScope.RUNTIME)
-public class ReflectionMojo extends AbstractMojo {
-
-	@Parameter(defaultValue = "${project}", readonly = true, required = true)
-	protected MavenProject project;
-
-	@Parameter(name = "reflectClasses")
-	String[] reflectClasses;
-
-	@Parameter(name = "reflectPackages")
-	String[] reflectPackages;
-
-	@Parameter(name = "excludeClasses")
-	String[] excludeClasses; 
-
-	@Parameter(name = "reflectConfigFile", defaultValue = "xm-reflection-config.json")
-	String reflectConfigFile;
-
-	private void init() {
-		{
-			if (reflectClasses == null) {
-				reflectClasses = new String[]{};
-			}
-			if (reflectPackages == null) {
-				reflectPackages = new String[]{};
-			}
-			if (reflectConfigFile == null) {
-				reflectConfigFile = "xm-reflection-config.json";
-			}
-			if (excludeClasses == null) {
-				excludeClasses = new String[]{};
-			}
-		}
-	}
+public class ReflectionMojo extends ReflexyMojo {
 
 	public void execute() throws MojoExecutionException, MojoFailureException {
-		init();
+		super.execute();
 		getLog().info("Reflection Mojo invoked");
 		Reflections reflections = getReflectionsFromPackagesAndClasses();
 		if (reflections != null) {
 			Set<ReflectionConfigEntry> entries = generateReflectionConfigs(reflections);
-			dump(entries);
+			dump(entries, reflectConfigFile);
 		}
 	}
-
-	private void dump(Set<ReflectionConfigEntry> entries) {
-		//Set<ReflectionConfigEntry> existing = load();
-		File outFile = new File("src/main/resources", reflectConfigFile);
-
-		try {
-			if (!outFile.createNewFile()) {
-				getLog().warn("Reflection config file exists, overwriting!");
-			}
-			FileOutputStream fos = new FileOutputStream(outFile);
-			ObjectMapper om = new ObjectMapper();
-			fos.write(om.writeValueAsBytes(entries));
-			fos.close();
-		} catch (IOException ioe) {
-			throw new RuntimeException(ioe);
-		}
-
-	}
-
 
 	private Set<ReflectionConfigEntry> generateReflectionConfigs(Reflections reflections) {
 		Set<String> excludeSet = new HashSet<>(Arrays.asList(this.excludeClasses));
