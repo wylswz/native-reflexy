@@ -95,6 +95,7 @@
 						<param>com.xmbsmdsj.mock.MockProxy</param>
 						<param>com.xmbsmdsj.mock.MockProxy,com.xmbsmdsj.mock.MockProxy2</param>
 					</proxyInterfaces>
+					<proxyConfigFile>src/main/resource3</proxyConfigFile>
 				</configuration>
 			</plugin>
 		</plugins>
