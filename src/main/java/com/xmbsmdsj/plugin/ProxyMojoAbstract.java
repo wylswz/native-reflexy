@@ -1,6 +1,5 @@
 package com.xmbsmdsj.plugin;
 
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashSet;
 import java.util.List;
@@ -13,7 +12,7 @@ import org.apache.maven.plugins.annotations.ResolutionScope;
 import org.reflections.util.ClasspathHelper;
 
 @Mojo(name = "proxy", requiresDependencyResolution = ResolutionScope.RUNTIME)
-public class ProxyMojo extends ReflexyMojo {
+public class ProxyMojoAbstract extends AbstractReflexyMojo {
 
 	@Override
 	public void execute() throws MojoExecutionException, MojoFailureException {

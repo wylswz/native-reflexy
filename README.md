@@ -55,3 +55,14 @@ If your are using quarkus framework, simple add this to build args
 -H:ResourceConfigurationFiles=xm-reflect-config.json
 ```
 and you are good to go :)
+
+# Configuration References
+
+|Option|Type|Detail|
+|---|---|---|
+|reflectClasses|`List<String>`|List of classes to register for reflection|
+|reflectPackages|`List<String>`|List of packages where all classes are registered for reflection|
+|excludeClasses|`List<String>`|Classes to exclude when registering reflect classes. Note that proxy registrations are **NOT** counted|
+|proxyInterfaces|`List<List<String>>`|Interfaces used in dynamic proxy.|
+|reflectConfigFile|`String`|Location of reflect-config.json. If file name is given without path, the file is placed under `src/main/resources` path by default. Otherwise, the path and filename will be directly used(discouraged)|
+|proxyConfigFile|`String`|Location of proxy-config.json. If file name is given without path, the file is placed under `src/main/resources` path by default. Otherwise, the path and filename will be directly used(discouraged)|

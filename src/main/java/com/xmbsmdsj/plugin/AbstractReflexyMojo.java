@@ -12,7 +12,7 @@ import org.apache.maven.plugin.MojoFailureException;
 import org.apache.maven.plugins.annotations.Parameter;
 import org.apache.maven.project.MavenProject;
 
-public abstract class ReflexyMojo extends AbstractMojo implements ProjectAware {
+public abstract class AbstractReflexyMojo extends AbstractMojo implements ProjectAware {
 	@Parameter(defaultValue = "${project}", readonly = true, required = true)
 	protected MavenProject project;
 

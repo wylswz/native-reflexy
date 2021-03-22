@@ -1,7 +1,4 @@
 package com.xmbsmdsj.plugin;
-import java.io.File;
-import java.io.FileOutputStream;
-import java.io.IOException;
 import java.net.URL;
 import java.util.Arrays;
 import java.util.Collection;
@@ -9,11 +6,9 @@ import java.util.HashSet;
 import java.util.Set;
 import java.util.stream.Collectors;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
 import com.xmbsmdsj.classloaders.ClassLoaderFactory;
 import com.xmbsmdsj.classloaders.MavenProjectClassLoaderFactory;
 import com.xmbsmdsj.pojos.ReflectionConfigEntry;
-import com.xmbsmdsj.utils.ConfigLocationUtils;
 import org.apache.maven.plugin.MojoExecutionException;
 import org.apache.maven.plugin.MojoFailureException;
 import org.apache.maven.plugins.annotations.Mojo;
@@ -24,7 +19,7 @@ import org.reflections.util.ClasspathHelper;
 import org.reflections.util.ConfigurationBuilder;
 
 @Mojo(name = "reflection", requiresDependencyResolution = ResolutionScope.RUNTIME)
-public class ReflectionMojo extends ReflexyMojo {
+public class ReflectionMojoAbstract extends AbstractReflexyMojo {
 
 	public void execute() throws MojoExecutionException, MojoFailureException {
 		super.execute();
@@ -55,7 +50,7 @@ public class ReflectionMojo extends ReflexyMojo {
 		ClassLoaderFactory factory = MavenProjectClassLoaderFactory.newClassLoaderFactory(project);
 		ClassLoader projectClassLoader = factory.getClassLoader();
 		if (projectClassLoader == null) {
-			projectClassLoader = ReflectionMojo.class.getClassLoader();
+			projectClassLoader = ReflectionMojoAbstract.class.getClassLoader();
 		}
 
 		for (String pkg : reflectPackages) {
